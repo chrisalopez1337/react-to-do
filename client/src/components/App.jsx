@@ -32,7 +32,7 @@ export default function App() {
         <Container>
             <h1>React-To-Do</h1>
             <CreateItem updateItems={updateItems} />
-            { toDoItems.map(item => <ItemEntry item={item} />)}
+            { toDoItems.map(item => <ItemEntry item={item} updateItems={updateItems} />)}
         </Container>
     );
 };
