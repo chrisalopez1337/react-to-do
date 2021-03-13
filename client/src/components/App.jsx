@@ -16,11 +16,21 @@ const Container = styled.div`
 export default function App() {
     // Hold all to-do items
     const [toDoItems, setToDoItems] = useState([]);
+    // set all items
+    function updateItems() {
+        const allItems = getAll();
+        setToDoItems(allItems);
+    }
+
+    // Mounting all items
+    useEffect(() => {
+        updateItems();
+    }, []);
 
     return (
         <Container>
             <h1>React-To-Do</h1>
-            <CreateItem />
+            <CreateItem updateItems={updateItems} />
         </Container>
     );
 };

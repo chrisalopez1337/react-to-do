@@ -38,7 +38,7 @@ const Button = styled.button`
     }
 `;
 
-export default function CreateItem() {
+export default function CreateItem({ updateItems }) {
     // Hold Item title
     const [title, setTitle] = useState('');
     // Title handler
@@ -51,6 +51,7 @@ export default function CreateItem() {
         const key = title;
         const data = { status: 'none' };
         setOne(key, data);
+        updateItems();
     }
 
     return (
