@@ -66,8 +66,38 @@ const CompletedText = styled.h2`
     color: #7d7780;
 `;
 
+const Input = styled.input`
+    border: 2px solid #edcc26;
+    border-radius: 7px;
+    padding: 7px;
+    font-size: 16px;
+    color: whitesmoke;
+    font-family: inherit;
+    background-color: transparent;
+    margin-right: 10px;
+`;
+
 export default function ItemEntry({ item, updateItems }) {
     const { key, data } = item;
+
+    // Store data for editing an items name
+    const [edit, setEdit] = useState(false);
+    const [newTitle, setNewTitle] = useState('');
+
+    // New title handler
+    function handleNewTitle(e) {
+        setNewTitle(e.target.value);
+    }
+
+    // Update handler
+    function handleUpdate() {
+        const data = { status: 'none' };
+        deleteOne(key);
+        setOne(newTitle, data);
+        updateItems();
+        setEdit(false);
+    }
+
 
     // Delete handler
     function deleteItem() {
@@ -82,17 +112,36 @@ export default function ItemEntry({ item, updateItems }) {
         updateItems();
     }
 
-    // Conditional rendering for item text
-    const textRender = data.status === 'complete'
-        ? <CompletedText>{key}</CompletedText>
-        : <h2>{key}</h2>;
+    // Conditional rendering for item 
+    const itemRender = edit 
+        ? (
+            <Container>
+                <Input placeholder="new title..." value={newTitle} onChange={handleNewTitle} />
+                <EditButton onClick={() => handleUpdate()}>Update</EditButton>
+            </Container>
+          )
+        : data.status === 'complete'
+        ? (
+            <Container>
+                <CompletedText>{key}</CompletedText>
+                <DeleteButton onClick={() => deleteItem()}>Delete</DeleteButton>
+                <CompleteButton onClick={() => completeItem()}>Complete</CompleteButton>
+                <EditButton onClick={() => setEdit(true)}>Edit</EditButton>
+            </Container>
+          )
+        : (
+            <Container>
+                <h2>{key}</h2>
+                <DeleteButton onClick={() => deleteItem()}>Delete</DeleteButton>
+                <CompleteButton onClick={() => completeItem()}>Complete</CompleteButton>
+                <EditButton onClick={() => setEdit(true)}>Edit</EditButton>
+            </Container>
+          );
 
     
     return (
-        <Container>
-            {textRender}
-            <DeleteButton onClick={() => deleteItem()}>Delete</DeleteButton>
-            <CompleteButton onClick={() => completeItem()}>Complete</CompleteButton>
-        </Container>
+        <>
+            {itemRender}
+        </>
     );
 }
