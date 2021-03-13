@@ -4,6 +4,7 @@ import { setOne, getOne, deleteOne, getAll } from 'local-js';
 import styled from 'styled-components';
 // Children components
 import CreateItem from './CreateItem.jsx';
+import ItemEntry from './ItemEntry.jsx';
 
 // Styling
 const Container = styled.div`
@@ -31,6 +32,7 @@ export default function App() {
         <Container>
             <h1>React-To-Do</h1>
             <CreateItem updateItems={updateItems} />
+            { toDoItems.map(item => <ItemEntry item={item} />)}
         </Container>
     );
 };
