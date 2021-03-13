@@ -45,11 +45,19 @@ export default function CreateItem() {
     function handleTitle(e) {
         setTitle(e.target.value);
     }
+
+    // Submit handler
+    function handleSubmit() {
+        const key = title;
+        const data = { status: 'none' };
+        setOne(key, data);
+    }
+
     return (
         <Container>
             <h3>New To-Do:</h3>
             <Input placeholder="To-Do Name..." value={title} onChange={handleTitle}/>
-            <Button>Add</Button>
+            <Button onClick={() => handleSubmit()}>Add</Button>
         </Container>
     );
 }
